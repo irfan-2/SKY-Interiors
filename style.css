@@ -1,0 +1,1785 @@
+/* ==========================================================================
+   Sky INTERIORS — MAIN STYLESHEET (v3 — Editorial / Layered Luxury)
+   Design language: Gallery-quiet, editorial, asymmetric, tactile
+   Typography: Playfair Display (display) + Poppins (body/UI)
+   Matched to the live markup: services (6 cards), about (media + content +
+   blocks wrapper), why-us (6 cards), 7-step process, faq, cta, 4-col footer.
+   portfolio/testimonials rules are kept (harmless) for when those commented
+   -out sections are re-enabled.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. CSS VARIABLES (DESIGN TOKENS)
+   ========================================================================== */
+:root {
+  /* Colors */
+  --color-primary: #1B1A18;
+  --color-secondary: #B8935B;
+  --color-secondary-light: #E4C793;
+  --color-secondary-dark: #8F6E3E;
+  --color-bg: #F6F2EA;
+  --color-bg-alt: #EFE7D8;
+  --color-card: #FFFFFF;
+  --color-text-muted: #6E6A62;
+  --color-border: #E3DACB;
+  --color-white: #FFFFFF;
+  --color-ink: #14130F;
+
+  /* Typography */
+  --font-display: "Playfair Display", serif;
+  --font-body: "Poppins", sans-serif;
+
+  /* Font sizes — editorial scale */
+  --fs-h1: clamp(3rem, 6.6vw, 6.2rem);
+  --fs-h2: clamp(2.2rem, 4.4vw, 3.6rem);
+  --fs-h3: 1.4rem;
+  --fs-body: 1rem;
+  --fs-small: 0.86rem;
+  --fs-eyebrow: 0.78rem;
+
+  /* Spacing scale (luxury = generous, uneven whitespace) */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.75rem;
+  --space-lg: 3.25rem;
+  --space-xl: 6rem;
+  --space-2xl: 9.5rem;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 18px;
+  --radius-lg: 32px;
+  --radius-xl: 48px;
+  --radius-round: 50%;
+
+  /* Shadows */
+  --shadow-soft: 0 10px 30px rgba(20, 19, 15, 0.06);
+  --shadow-medium: 0 22px 50px rgba(20, 19, 15, 0.12);
+  --shadow-elevated: 0 40px 80px rgba(20, 19, 15, 0.20);
+  --shadow-gold: 0 14px 32px rgba(184, 147, 91, 0.35);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.45s cubic-bezier(0.22, 0.8, 0.2, 1);
+  --transition-slow: 0.85s cubic-bezier(0.16, 0.84, 0.24, 1);
+
+  /* Layout */
+  --container-max: 1320px;
+  --container-narrow: 760px;
+  --header-height: 88px;
+}
+
+/* ==========================================================================
+   2. RESET & BASE STYLES
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--color-primary);
+  background-color: var(--color-bg);
+  position: relative;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+  color: var(--color-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Skip link (accessibility, visually hidden until focused) */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-secondary);
+  color: var(--color-white);
+  padding: var(--space-xs) var(--space-sm);
+  z-index: 999;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   3. SELECTION & SCROLLBAR STYLING
+   ========================================================================== */
+::selection {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-secondary);
+  border-radius: var(--radius-lg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary-dark);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-secondary) var(--color-bg);
+}
+
+/* ==========================================================================
+   4. SHARED LAYOUT HELPERS
+   ========================================================================== */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes softFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+section {
+  position: relative;
+  padding: var(--space-xl) 6vw;
+  isolation: isolate;
+}
+
+/* Decorative blurred orbs, scoped per section so no two feel identical */
+.services,
+.about,
+.process,
+.cta {
+  overflow: clip;
+}
+
+.services::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  right: -160px;
+  width: 460px;
+  height: 460px;
+  background: radial-gradient(circle, rgba(184, 147, 91, 0.16), transparent 70%);
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.about::after {
+  content: "";
+  position: absolute;
+  bottom: -140px;
+  left: -120px;
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(184, 147, 91, 0.14), transparent 70%);
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.process::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  right: -180px;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(184, 147, 91, 0.10), transparent 70%);
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.section-header {
+  max-width: var(--container-narrow);
+  margin: 0 auto var(--space-xl);
+  text-align: center;
+  animation: fadeUp 0.9s cubic-bezier(0.16, 0.84, 0.24, 1) both;
+}
+
+.section-header__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-secondary-dark);
+  margin-bottom: var(--space-md);
+  position: relative;
+}
+
+.section-header__eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 34px;
+  height: 1px;
+  background: var(--color-secondary);
+}
+
+.section-header__title {
+  font-size: var(--fs-h2);
+  margin-bottom: var(--space-sm);
+}
+
+.section-header__subtitle {
+  color: var(--color-text-muted);
+  font-size: 1.08rem;
+  line-height: 1.8;
+}
+
+/* Alternate section backgrounds for rhythm without touching HTML */
+.services,
+.why-us,
+.faq {
+  background-color: var(--color-bg);
+}
+
+.about,
+.process {
+  background-color: var(--color-bg-alt);
+}
+
+.portfolio,
+.testimonials {
+  background-color: var(--color-card);
+}
+
+/* ==========================================================================
+   5. BUTTONS
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 1.05rem 2.4rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-base), box-shadow var(--transition-base),
+    background-color var(--transition-base), color var(--transition-base),
+    border-color var(--transition-base);
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn--primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-ink);
+  transform: translateX(-101%);
+  transition: transform var(--transition-base);
+  z-index: -1;
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  color: var(--color-white);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.btn--primary:hover::after,
+.btn--primary:focus-visible::after {
+  transform: translateX(0);
+}
+
+.btn--secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+}
+
+.btn--secondary:hover,
+.btn--secondary:focus-visible {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium);
+}
+
+.btn--large {
+  padding: 1.25rem 3rem;
+  font-size: 1rem;
+}
+/* ==========================================================================
+   6. STICKY NAVIGATION (FORCED FIXED)
+   ========================================================================== */
+.site-header,
+.has-transparent-header .site-header,
+.site-header.is-scrolled,
+.site-header--scrolled {
+  position: fixed !important; /* Forces it to stay on screen permanently */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000 !important;
+  background-color: rgba(246, 242, 234, 0.97) !important; /* Always solid */
+  backdrop-filter: blur(18px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Ensure text is ALWAYS dark and readable */
+.has-transparent-header .site-header .navbar__link,
+.has-transparent-header .site-header .navbar__company-name,
+.site-header.is-scrolled .navbar__link,
+.site-header.is-scrolled .navbar__company-name {
+  color: var(--color-primary) !important;
+}
+
+.has-transparent-header .site-header .navbar__link::after,
+.site-header.is-scrolled .navbar__link::after {
+  background-color: var(--color-secondary) !important;
+}
+
+.has-transparent-header .site-header .navbar__toggle-bar,
+.site-header.is-scrolled .navbar__toggle-bar {
+  background-color: var(--color-primary) !important;
+}
+
+/* Push the main content down so it doesn't hide under the fixed header */
+#main-content {
+  padding-top: var(--header-height);
+}
+
+/* Override the JS transparent padding override */
+.has-transparent-header main {
+  padding-top: var(--header-height) !important;
+}
+
+/* ===== EVERYTHING BELOW THIS LINE STAYS THE SAME ===== */
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  height: var(--header-height);
+  padding: 0 6vw;
+}
+/* ... keep the rest of your navbar css here ... */
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.navbar__logo {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-round);
+  object-fit: cover;
+  border: 2px solid var(--color-secondary);
+  transition: transform var(--transition-base);
+}
+
+.navbar__logo-link:hover .navbar__logo {
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.navbar__company-name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--color-primary);
+}
+
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.navbar__link {
+  position: relative;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-primary);
+  padding: 0.4rem 0;
+  transition: color var(--transition-fast);
+}
+
+.navbar__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-secondary);
+  transition: width var(--transition-base);
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--color-secondary-dark);
+}
+
+.navbar__link:hover::after,
+.navbar__link--active::after {
+  width: 100%;
+}
+
+.navbar__cta {
+  padding: 0.75rem 1.7rem;
+  font-size: 0.82rem;
+}
+
+.navbar__toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.navbar__toggle-bar {
+  width: 26px;
+  height: 2px;
+  background-color: var(--color-primary);
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+/* Toggle bar → "X" state, driven by the aria-expanded attribute your JS
+   already sets — no new class required from script.js */
+#navToggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+#navToggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+
+#navToggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+/* ==========================================================================
+   7. HERO SECTION — full-bleed cinematic backdrop, floating content
+   ========================================================================== */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0 6vw;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* The image now fills the entire section as a backdrop layer */
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(20, 19, 15, 0.72) 0%, rgba(20, 19, 15, 0.42) 42%, rgba(20, 19, 15, 0.18) 68%, rgba(20, 19, 15, 0.5) 100%),
+    linear-gradient(180deg, rgba(20, 19, 15, 0.35) 0%, rgba(20, 19, 15, 0) 30%, rgba(20, 19, 15, 0) 70%, rgba(20, 19, 15, 0.55) 100%);
+}
+
+.hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.04);
+  animation: heroImageIn 6s cubic-bezier(0.16, 0.84, 0.24, 1) both;
+}
+
+@keyframes heroImageIn {
+  from { transform: scale(1.14); }
+  to { transform: scale(1.04); }
+}
+
+/* A thin gold rule and eyebrow-style kicker give the floating content an
+   anchor point, echoing the eyebrow treatment used across other sections */
+.hero__content {
+  position: relative;
+  max-width: 620px;
+  padding: calc(var(--header-height) + var(--space-xl)) 0 var(--space-2xl);
+  color: var(--color-white);
+  animation: fadeUp 1.1s cubic-bezier(0.16, 0.84, 0.24, 1) both;
+}
+
+.hero__content::before {
+  content: "Sky Interiors";
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-secondary-light);
+  margin-bottom: var(--space-md);
+}
+
+.hero__content::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 2px;
+  background: var(--color-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.hero__heading {
+  font-size: var(--fs-h1);
+  letter-spacing: -0.02em;
+  color: var(--color-white);
+  margin-bottom: var(--space-lg);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.2);
+}
+
+.hero__description {
+  font-size: 1.14rem;
+  color: rgba(248, 248, 248, 0.82);
+  margin-bottom: var(--space-lg);
+  max-width: 460px;
+  line-height: 1.9;
+}
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* On the transparent/dark hero, the secondary button needs a light border
+   instead of the dark-on-light default used elsewhere on the page */
+.hero .btn--secondary {
+  color: var(--color-white);
+  border-color: rgba(248, 248, 248, 0.55);
+}
+
+.hero .btn--secondary:hover,
+.hero .btn--secondary:focus-visible {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  border-color: var(--color-white);
+}
+
+/* Scroll cue — small decorative floating element */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 6vw;
+  bottom: var(--space-lg);
+  width: 1px;
+  height: 64px;
+  background: linear-gradient(180deg, rgba(248, 248, 248, 0.7), transparent);
+  animation: softFloat 2.6s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   8. SERVICES SECTION — magazine grid: one featured + five supporting cards
+   ========================================================================== */
+.services__grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-md);
+}
+
+.service-card {
+  background-color: var(--color-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  grid-column: span 2;
+}
+
+/* Card 1 (Living Room) — the featured service, wide and led by a landscape image */
+.service-card:nth-child(1) {
+  grid-column: span 4;
+}
+
+/* Card 2 (Bedroom) — a tall companion piece beside the featured card */
+.service-card:nth-child(2) {
+  grid-column: span 2;
+}
+
+.service-card:nth-child(1) .service-card__media {
+  aspect-ratio: 16 / 10;
+}
+
+.service-card:nth-child(2) .service-card__media {
+  aspect-ratio: 3 / 4;
+}
+
+.service-card:nth-child(1) .service-card__title {
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+}
+
+.service-card:hover {
+  transform: translateY(-14px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.service-card__media {
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  position: relative;
+}
+
+.service-card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(20, 19, 15, 0.3) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.service-card:hover .service-card__media::after {
+  opacity: 1;
+}
+
+.service-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.service-card:hover .service-card__image {
+  transform: scale(1.12);
+}
+
+.service-card__title {
+  font-size: var(--fs-h3);
+  margin: var(--space-md) var(--space-md) 0.5rem;
+}
+
+.service-card__description {
+  font-size: 0.93rem;
+  line-height: 1.75;
+  color: var(--color-text-muted);
+  margin: 0 var(--space-md) var(--space-md);
+}
+
+/* ==========================================================================
+   9. FEATURED PROJECTS / PORTFOLIO SECTION — alternating, layered captions
+   (kept for when the commented-out #portfolio section is re-enabled)
+   ========================================================================== */
+.portfolio__grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl) var(--space-lg);
+}
+
+.project-card {
+  background-color: var(--color-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  position: relative;
+}
+
+.project-card:nth-child(3n+2) {
+  margin-top: var(--space-xl);
+}
+
+.project-card:nth-child(3n+3) {
+  margin-top: calc(var(--space-lg) * 0.6);
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.project-card__image {
+  width: 100%;
+  aspect-ratio: 4 / 3.4;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.project-card:hover .project-card__image {
+  transform: scale(1.1);
+}
+
+.project-card__body {
+  padding: var(--space-md);
+  position: relative;
+  margin-top: -2.5rem;
+  background: var(--color-card);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  box-shadow: 0 -14px 30px rgba(20, 19, 15, 0.04);
+}
+
+.project-card__title {
+  font-size: 1.32rem;
+  margin-bottom: 0.3rem;
+}
+
+.project-card__location {
+  font-size: var(--fs-small);
+  color: var(--color-secondary-dark);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-sm);
+}
+
+.project-card__meta {
+  display: flex;
+  gap: var(--space-md);
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+  flex-wrap: wrap;
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.meta-label {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.project-card__description {
+  font-size: 0.93rem;
+  line-height: 1.75;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   10. ABOUT US SECTION — layered image frame + floating block cards
+   ========================================================================== */
+.about {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.about__media {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-elevated);
+  margin-left: var(--space-lg);
+}
+
+.about__media::before {
+  content: "";
+  position: absolute;
+  inset: auto auto -28px -28px;
+  width: 62%;
+  height: 62%;
+  border: 1.5px solid var(--color-secondary);
+  border-radius: var(--radius-lg);
+  z-index: -1;
+}
+
+.about__image {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 3 / 3.6;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.about__media:hover .about__image {
+  transform: scale(1.05);
+}
+
+.about__content {
+  max-width: 620px;
+}
+
+.about__heading {
+  font-size: var(--fs-h2);
+  margin-bottom: var(--space-lg);
+  max-width: 520px;
+}
+
+/* Wrapper introduced in markup purely for layout: turns the three stacked
+   blockquote-style blocks into a small editorial card grid. */
+.about__blocks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.about__block {
+  padding: var(--space-md);
+  background-color: var(--color-card);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--color-secondary);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.about__block:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-medium);
+}
+
+/* "Our Story" leads, spanning the full width above Mission / Vision */
+.about__block:first-child {
+  grid-column: 1 / -1;
+}
+
+.about__block-title {
+  font-size: 1.14rem;
+  margin-bottom: 0.5rem;
+}
+
+.about__block-text {
+  color: var(--color-text-muted);
+  font-size: 0.96rem;
+  line-height: 1.75;
+}
+
+/* ---- Statistics — floating glass strip (currently commented out in HTML) ---- */
+.about__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+  padding: var(--space-lg) var(--space-md);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(227, 218, 203, 0.9);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-medium);
+}
+
+.stat-item {
+  text-align: center;
+  position: relative;
+}
+
+.stat-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 10%;
+  right: calc(-1 * var(--space-md) / 2);
+  width: 1px;
+  height: 80%;
+  background: var(--color-border);
+}
+
+.stat-item__number {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--color-secondary-dark);
+}
+
+.stat-item__label {
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   11. WHY CHOOSE US SECTION — glass cards, staggered rhythm
+   ========================================================================== */
+.why-us__grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+.feature-card {
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-md) var(--space-lg);
+  text-align: center;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base), background-color var(--transition-base);
+}
+
+.feature-card:nth-child(2n) {
+  transform: translateY(var(--space-md));
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-elevated);
+  border-color: var(--color-secondary);
+  background-color: var(--color-card);
+}
+
+.feature-card:nth-child(2n):hover {
+  transform: translateY(calc(var(--space-md) - 10px));
+}
+
+.feature-card::before {
+  content: "";
+  display: block;
+  width: 46px;
+  height: 2px;
+  background-color: var(--color-secondary);
+  margin: 0 auto var(--space-md);
+  transition: width var(--transition-base);
+}
+
+.feature-card:hover::before {
+  width: 72px;
+}
+
+.feature-card__title {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-xs);
+}
+
+.feature-card__description {
+  font-size: 0.93rem;
+  line-height: 1.75;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   12. OUR PROCESS — TIMELINE SECTION — staggered, gradient spine
+   ========================================================================== */
+.process__timeline {
+  max-width: 880px;
+  margin: 0 auto;
+  position: relative;
+  padding-left: var(--space-xl);
+}
+
+.process__timeline::before {
+  content: "";
+  position: absolute;
+  left: 21px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--color-secondary), var(--color-border) 85%);
+}
+
+.process__step {
+  position: relative;
+  padding-bottom: var(--space-xl);
+}
+
+.process__step:last-child {
+  padding-bottom: 0;
+}
+
+.process__step:nth-child(even) {
+  margin-left: var(--space-lg);
+}
+
+.process__step-number {
+  position: absolute;
+  left: calc(-1 * var(--space-xl) + 0px);
+  top: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  color: var(--color-secondary-light);
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 700;
+  border-radius: var(--radius-round);
+  border: 3px solid var(--color-bg-alt);
+  box-shadow: var(--shadow-soft);
+  transition: background-color var(--transition-base), transform var(--transition-base);
+}
+
+.process__step:hover .process__step-number {
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+  transform: scale(1.12) rotate(-6deg);
+}
+
+.process__step-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.35rem;
+}
+
+.process__step-text {
+  color: var(--color-text-muted);
+  font-size: 0.96rem;
+  line-height: 1.75;
+  max-width: 520px;
+}
+
+/* ==========================================================================
+   13. TESTIMONIALS SECTION — overlapping, offset rhythm
+   (kept for when the commented-out #testimonials section is re-enabled)
+   ========================================================================== */
+.testimonials__grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+.testimonial-card {
+  background-color: var(--color-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-md) var(--space-lg);
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  position: relative;
+}
+
+.testimonial-card:nth-child(2n) {
+  margin-top: calc(-1 * var(--space-md));
+}
+
+.testimonial-card::before {
+  content: "\201C";
+  position: absolute;
+  top: 0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: 3.4rem;
+  line-height: 1;
+  color: var(--color-secondary-light);
+}
+
+.testimonial-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.testimonial-card__photo {
+  width: 76px;
+  height: 76px;
+  border-radius: var(--radius-round);
+  object-fit: cover;
+  margin: 0 auto var(--space-sm);
+  border: 3px solid var(--color-secondary-light);
+}
+
+.testimonial-card__name {
+  font-size: 1.08rem;
+  margin-bottom: 0.3rem;
+}
+
+.testimonial-card__rating {
+  color: var(--color-secondary);
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--space-sm);
+}
+
+.testimonial-card__review {
+  font-size: 0.96rem;
+  line-height: 1.8;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* ==========================================================================
+   14. FAQ — ACCORDION SECTION — refined, elevated on open
+   ========================================================================== */
+.faq__accordion {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.faq-item {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  transition: box-shadow var(--transition-base), border-color var(--transition-base), transform var(--transition-base);
+}
+
+.faq-item:hover {
+  transform: translateX(4px);
+}
+
+.faq-item[open] {
+  box-shadow: var(--shadow-medium);
+  border-color: var(--color-secondary);
+  transform: none;
+}
+
+.faq-item__question {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  padding: var(--space-xs) 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.faq-item__question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item__question::after {
+  content: "+";
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-round);
+  background-color: var(--color-bg);
+  color: var(--color-secondary-dark);
+  font-size: 1.2rem;
+  transition: transform var(--transition-base), background-color var(--transition-base);
+}
+
+.faq-item[open] .faq-item__question::after {
+  content: "\2212";
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  transform: rotate(180deg);
+}
+
+.faq-item__answer {
+  padding: var(--space-sm) 0 var(--space-sm);
+  color: var(--color-text-muted);
+  font-size: 0.96rem;
+  line-height: 1.8;
+  max-width: 620px;
+}
+
+/* ==========================================================================
+   15. CALL TO ACTION SECTION — gradient depth, decorative shapes
+   ========================================================================== */
+.cta {
+  background: radial-gradient(120% 160% at 15% 0%, #2a2622 0%, var(--color-primary) 55%, var(--color-ink) 100%);
+  text-align: center;
+  border-radius: var(--radius-xl);
+  margin: 0 6vw var(--space-2xl);
+  padding: calc(var(--space-2xl) * 0.75) var(--space-lg);
+}
+
+.cta::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  left: -80px;
+  width: 280px;
+  height: 280px;
+  border: 1px solid rgba(228, 199, 147, 0.25);
+  border-radius: 50%;
+}
+
+.cta::after {
+  content: "";
+  position: absolute;
+  bottom: -100px;
+  right: -60px;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(184, 147, 91, 0.28), transparent 70%);
+  border-radius: 50%;
+}
+
+.cta__heading {
+  font-size: var(--fs-h2);
+  color: var(--color-white);
+  margin-bottom: var(--space-md);
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta__text {
+  color: rgba(248, 248, 248, 0.72);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  max-width: 560px;
+  margin: 0 auto var(--space-lg);
+}
+
+/* ==========================================================================
+   16. FOOTER — matches the real 4-column grid: brand / links / contact / social
+   ========================================================================== */
+.site-footer {
+  background-color: var(--color-primary);
+  color: rgba(248, 248, 248, 0.8);
+  padding: var(--space-xl) 6vw var(--space-md);
+  position: relative;
+}
+
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 6vw;
+  right: 6vw;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-secondary), transparent 60%);
+}
+
+.footer__top {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid rgba(248, 248, 248, 0.12);
+}
+
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__logo {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-round);
+  object-fit: cover;
+  border: 2px solid var(--color-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.footer__tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.02rem;
+  color: rgba(248, 248, 248, 0.7);
+  line-height: 1.7;
+}
+
+.footer__heading {
+  font-family: var(--font-body);
+  font-size: 0.94rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-secondary-light);
+  margin-bottom: var(--space-md);
+}
+
+.footer__links ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.footer__links a,
+.footer__contact a {
+  font-size: 0.93rem;
+  transition: color var(--transition-fast), padding-left var(--transition-fast);
+}
+
+.footer__links a:hover,
+.footer__contact a:hover {
+  color: var(--color-secondary-light);
+  padding-left: 4px;
+}
+
+.footer__contact p {
+  font-size: 0.93rem;
+  margin-bottom: 0.65rem;
+  line-height: 1.6;
+}
+
+.social-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.social-icons__link {
+  font-size: 0.93rem;
+  transition: color var(--transition-fast), padding-left var(--transition-fast);
+}
+
+.social-icons__link:hover {
+  color: var(--color-secondary-light);
+  padding-left: 4px;
+}
+
+.footer__bottom {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding-top: var(--space-md);
+  text-align: center;
+}
+
+.footer__copyright {
+  font-size: 0.85rem;
+  color: rgba(248, 248, 248, 0.55);
+}
+
+/* ==========================================================================
+   17. FLOATING WHATSAPP BUTTON
+   ========================================================================== */
+.whatsapp-float {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  width: 58px;
+  height: 58px;
+  background-color: #25D366;
+  border-radius: var(--radius-round);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-medium);
+  z-index: 400;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  animation: softFloat 4s ease-in-out infinite;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1) translateY(-3px);
+  box-shadow: var(--shadow-elevated);
+  animation-play-state: paused;
+}
+
+.whatsapp-float__icon {
+  width: 30px;
+  height: 30px;
+}
+
+/* ==========================================================================
+   18. BACK TO TOP BUTTON
+   ========================================================================== */
+.back-to-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 50px;
+  height: 50px;
+  background-color: var(--color-primary);
+  color: var(--color-secondary-light);
+  font-size: 1.3rem;
+  border-radius: var(--radius-round);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-medium);
+  z-index: 400;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  transition: opacity var(--transition-base), visibility var(--transition-base), transform var(--transition-base), background-color var(--transition-base);
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
+   19. SCROLL REVEAL & MICRO-INTERACTIONS
+   Driven by enhancements.js (IntersectionObserver). No-JS fallback: elements
+   simply render in their final, fully visible state — nothing is hidden by
+   default, so the site is complete without the script.
+   ========================================================================== */
+/* Elements are fully visible by default. Only once enhancements.js has
+   confirmed it's running (and adds .js-reveal to <html>) do they start
+   hidden, pending their own reveal — so a blocked/failed script can never
+   leave content permanently invisible. */
+.js-reveal [data-reveal],
+.js-reveal [data-reveal-group] > * {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.85s cubic-bezier(0.16, 0.84, 0.24, 1),
+    transform 0.85s cubic-bezier(0.16, 0.84, 0.24, 1);
+}
+
+[data-reveal].is-visible,
+.js-reveal [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+[data-reveal-group].is-visible > *,
+.js-reveal [data-reveal-group].is-visible > * {
+  opacity: 1;
+  transform: none;
+}
+
+[data-reveal-group].is-visible > *:nth-child(1) { transition-delay: 0ms; }
+[data-reveal-group].is-visible > *:nth-child(2) { transition-delay: 90ms; }
+[data-reveal-group].is-visible > *:nth-child(3) { transition-delay: 180ms; }
+[data-reveal-group].is-visible > *:nth-child(4) { transition-delay: 270ms; }
+[data-reveal-group].is-visible > *:nth-child(5) { transition-delay: 360ms; }
+[data-reveal-group].is-visible > *:nth-child(6) { transition-delay: 450ms; }
+[data-reveal-group].is-visible > *:nth-child(7) { transition-delay: 540ms; }
+[data-reveal-group].is-visible > *:nth-child(8) { transition-delay: 630ms; }
+
+/* Subtle architectural texture — a faint dot grid grounds the glass cards
+   without competing with the photography elsewhere on the page */
+.why-us {
+  position: relative;
+}
+
+.why-us::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(27, 26, 24, 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 40%, #000 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 40%, #000 0%, transparent 75%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Border-sweep accent on the service cards, echoing the feature-card treatment */
+.service-card {
+  position: relative;
+}
+
+.service-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--color-secondary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-base);
+}
+
+.service-card:hover::after {
+  transform: scaleX(1);
+}
+
+/* ==========================================================================
+   20. RESPONSIVE — TABLET & MOBILE
+   ========================================================================== */
+@media (max-width: 1080px) {
+  :root {
+    --space-2xl: 6.5rem;
+    --space-xl: 4.5rem;
+  }
+
+  .hero {
+    min-height: 88vh;
+  }
+
+  .hero__content {
+    max-width: 100%;
+    padding-top: calc(var(--header-height) + var(--space-lg));
+  }
+
+  .about {
+    grid-template-columns: 1fr;
+  }
+
+  .about__media {
+    margin-left: 0;
+    max-width: 480px;
+  }
+
+  .about__content,
+  .about__heading {
+    max-width: 100%;
+  }
+
+  .services__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .service-card:nth-child(1) {
+    grid-column: span 4;
+  }
+
+  .service-card:nth-child(2) {
+    grid-column: span 2;
+  }
+
+  .service-card:nth-child(n+3) {
+    grid-column: span 2;
+  }
+
+  .portfolio__grid,
+  .why-us__grid,
+  .testimonials__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .project-card:nth-child(3n+2),
+  .project-card:nth-child(3n+3),
+  .feature-card:nth-child(2n),
+  .testimonial-card:nth-child(2n) {
+    margin-top: 0;
+    transform: none;
+  }
+
+  .footer__top {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .navbar__menu {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+    background-color: var(--color-bg);
+    padding: var(--space-lg) 6vw;
+    border-bottom: 1px solid var(--color-border);
+    transform: translateY(-120%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform var(--transition-base), opacity var(--transition-base), visibility var(--transition-base);
+  }
+
+  /* Driven by the aria-expanded state script.js already toggles on #navToggle,
+     with an .is-open fallback in case the script instead toggles a class. */
+  #navToggle[aria-expanded="true"] ~ .navbar__menu,
+  .navbar__menu.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .navbar__toggle {
+    display: flex;
+  }
+
+  /* The dropdown panel always has a solid light background (below), so its
+     links must stay dark even while the header itself is still transparent
+     (i.e. menu opened before scrolling past the hero). Specificity is
+     bumped to beat the .has-transparent-header white-text override. */
+  .has-transparent-header .site-header .navbar__menu .navbar__link,
+  .has-transparent-header .site-header .navbar__menu .navbar__company-name {
+    color: var(--color-primary);
+  }
+
+  .has-transparent-header .site-header .navbar__menu .navbar__link::after {
+    background-color: var(--color-secondary);
+  }
+
+  section {
+    padding: var(--space-lg) 6vw;
+  }
+
+  .services__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .service-card:nth-child(1),
+  .service-card:nth-child(2),
+  .service-card:nth-child(n+3) {
+    grid-column: span 1;
+  }
+
+  .service-card:nth-child(1) .service-card__media {
+    aspect-ratio: 4 / 3;
+  }
+
+  .service-card:nth-child(2) .service-card__media {
+    aspect-ratio: 4 / 3;
+  }
+
+  .about__blocks {
+    grid-template-columns: 1fr;
+  }
+
+  .about__block:first-child {
+    grid-column: 1;
+  }
+
+  .process__timeline {
+    padding-left: var(--space-lg);
+  }
+
+  .process__step:nth-child(even) {
+    margin-left: 0;
+  }
+
+  .process__step-number {
+    left: calc(-1 * var(--space-lg) + 0px);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .services__grid,
+  .portfolio__grid,
+  .why-us__grid,
+  .testimonials__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about__stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md) var(--space-sm);
+  }
+
+  .stat-item:nth-child(2n)::after {
+    display: none;
+  }
+
+  .footer__top {
+    grid-template-columns: 1fr;
+  }
+
+  .cta {
+    margin: 0 4vw var(--space-xl);
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .whatsapp-float,
+  .back-to-top {
+    width: 48px;
+    height: 48px;
+    bottom: 18px;
+  }
+
+  .whatsapp-float {
+    left: 18px;
+  }
+
+  .back-to-top {
+    right: 18px;
+  }
+}

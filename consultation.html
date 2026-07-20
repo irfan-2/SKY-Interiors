@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Consultation | Sky Interiors</title>
+    <meta name="description" content="Book a free interior design consultation with Sky Interiors. Tell us about your dream home and we'll connect with you on WhatsApp.">
+
+    <!-- Same fonts as main site -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Reuse main site styles for navbar/buttons/footer consistency -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+
+    <!-- Consultation-page-specific styles -->
+    <link rel="stylesheet" href="consultation.css">
+</head>
+<body class="consultation-page">
+
+    <!-- ===================== STICKY NAVIGATION (same as index.html) ===================== -->
+    <header class="site-header" id="site-header">
+        <nav class="navbar" aria-label="Primary navigation">
+            <div class="navbar__brand">
+                <a href="index.html" class="navbar__logo-link" aria-label="Sky Interiors Home">
+                    <img src="" alt="Sky Interiors company logo" class="navbar__logo">
+                    <span class="navbar__company-name">Sky interiors</span>
+                </a>
+            </div>
+
+            <ul class="navbar__menu" id="navMenu">
+                <li class="navbar__item"><a href="index.html#home" class="navbar__link">Home</a></li>
+                <li class="navbar__item"><a href="index.html#services" class="navbar__link">Services</a></li>
+                <li class="navbar__item"><a href="index.html#about" class="navbar__link">About</a></li>
+                <li class="navbar__item"><a href="index.html#contact" class="navbar__link">Contact</a></li>
+            </ul>
+
+            <a href="consultation.html" class="btn btn--primary navbar__cta navbar__cta--active" aria-label="Book a free consultation">Book Consultation</a>
+
+            <button class="navbar__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+                <span class="navbar__toggle-bar"></span>
+                <span class="navbar__toggle-bar"></span>
+                <span class="navbar__toggle-bar"></span>
+            </button>
+        </nav>
+    </header>
+
+    <main id="main-content">
+
+        <!-- ===================== HERO ===================== -->
+        <section class="consult-hero" aria-label="Consultation hero">
+            <div class="consult-hero__content">
+                <p class="section-header__eyebrow consult-hero__eyebrow">Book Your Consultation</p>
+                <h1 class="consult-hero__heading">Let's Design Your <em>Dream Home</em></h1>
+                <p class="consult-hero__subtitle">Tell us a little about your project before we connect on WhatsApp. This helps us prepare the perfect consultation for you.</p>
+                <div class="consult-hero__line"></div>
+            </div>
+        </section>
+
+        <!-- ===================== CONSULTATION FORM ===================== -->
+        <section class="consult-form-section" aria-label="Consultation form">
+            <form id="consultationForm" class="consult-form" novalidate>
+
+                <!-- 01 — Personal Information -->
+                <div class="form-section" data-reveal>
+                    <div class="form-section__header">
+                        <span class="form-section__number">01</span>
+                        <h2 class="form-section__title">Personal Information</h2>
+                        <div class="form-section__line"></div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" data-field="fullName">
+                            <div class="input-field">
+                                <input type="text" id="fullName" name="fullName" placeholder=" " required autocomplete="name">
+                                <label for="fullName">Full Name *</label>
+                                <span class="focus-line"></span>
+                            </div>
+                            <span class="validation-msg" aria-live="polite"></span>
+                        </div>
+
+                        <div class="form-group" data-field="email">
+                            <div class="input-field">
+                                <input type="email" id="email" name="email" placeholder=" " required autocomplete="email">
+                                <label for="email">Email Address *</label>
+                                <span class="focus-line"></span>
+                            </div>
+                            <span class="validation-msg" aria-live="polite"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" data-field="mobile">
+                            <div class="input-field">
+                                <input type="tel" id="mobile" name="mobile" placeholder=" " required autocomplete="tel">
+                                <label for="mobile">Mobile Number *</label>
+                                <span class="focus-line"></span>
+                            </div>
+                            <span class="validation-msg" aria-live="polite"></span>
+                        </div>
+
+                        <div class="form-group" data-field="city">
+                            <div class="input-field">
+                                <input type="text" id="city" name="city" placeholder=" " required autocomplete="address-level2">
+                                <label for="city">City *</label>
+                                <span class="focus-line"></span>
+                            </div>
+                            <span class="validation-msg" aria-live="polite"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 02 — Home Details -->
+                <div class="form-section" data-reveal>
+                    <div class="form-section__header">
+                        <span class="form-section__number">02</span>
+                        <h2 class="form-section__title">Home Details</h2>
+                        <div class="form-section__line"></div>
+                    </div>
+
+                    <div class="form-group" data-field="homeSize">
+                        <label class="group-label">Home Size *</label>
+                        <div class="radio-group">
+                            <label class="radio-card">
+                                <input type="radio" name="homeSize" value="2 BHK" required>
+                                <span class="radio-content">
+                                    <span class="radio-dot"></span>
+                                    <span>2 BHK</span>
+                                </span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="homeSize" value="3 BHK">
+                                <span class="radio-content">
+                                    <span class="radio-dot"></span>
+                                    <span>3 BHK</span>
+                                </span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="homeSize" value="4 BHK or More">
+                                <span class="radio-content">
+                                    <span class="radio-dot"></span>
+                                    <span>4 BHK or More</span>
+                                </span>
+                            </label>
+                        </div>
+                        <span class="validation-msg" aria-live="polite"></span>
+                    </div>
+
+                    <div class="form-group" data-field="propertyType">
+                        <label class="group-label">Property Type *</label>
+                        <div class="radio-group">
+                            <label class="radio-card">
+                                <input type="radio" name="propertyType" value="Apartment" required>
+                                <span class="radio-content">
+                                    <span class="radio-dot"></span>
+                                    <span>Apartment</span>
+                                </span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="propertyType" value="Independent House / Villa">
+                                <span class="radio-content">
+                                    <span class="radio-dot"></span>
+                                    <span>Independent House / Villa</span>
+                                </span>
+                            </label>
+                        </div>
+                        <span class="validation-msg" aria-live="polite"></span>
+                    </div>
+                </div>
+
+                <!-- 03 — Services Required -->
+                <div class="form-section" data-reveal>
+                    <div class="form-section__header">
+                        <span class="form-section__number">03</span>
+                        <h2 class="form-section__title">Services Required</h2>
+                        <div class="form-section__line"></div>
+                    </div>
+                    <p class="form-section__description">Select all the services you're interested in</p>
+
+                    <div class="checkbox-grid">
+                        <label class="checkbox-tag">
+                            <input type="checkbox" name="services" value="Complete Interior Design">
+                            <span class="checkbox-content">Complete Interior Design</span>
+                        </label>
+                        <label class="checkbox-tag">
+                            <input type="checkbox" name="services" value="Modular Kitchen">
+                            <span class="checkbox-content">Modular Kitchen</span>
+                        </label>
+                        <label class="checkbox-tag">
+                            <input type="checkbox" name="services" value="Living Room">
+                            <span class="checkbox-content">Living Room</span>
+                        </label>
+                        <label class="checkbox-tag">
+                            <input type="checkbox" name="services" value="Bedroom">
+                            <span class="checkbox-content">Bedroom</span>
+                        </label>
+                        <label class="checkbox-tag">
+                            <input type="checkbox" name="services" value="Wardrobes">
+                            <span class="checkbox-content">Wardrobes</span>
+                        </label>
+                        <label class="checkbox-tag">
+                            <input type="checkbox" name="services" value="False Ceiling">
+                            <span class="checkbox-content">False Ceiling</span>
+                        </label>
+                        <label class="checkbox-tag">
+                            <input type="checkbox" name="services" value="Lighting">
+                            <span class="checkbox-content">Lighting</span>
+                        </label>
+                        <label class="checkbox-tag">
+                            <input type="checkbox" name="services" value="Furniture">
+                            <span class="checkbox-content">Furniture</span>
+                        </label>
+                        <label class="checkbox-tag">
+                            <input type="checkbox" name="services" value="Renovation">
+                            <span class="checkbox-content">Renovation</span>
+                        </label>
+                        <label class="checkbox-tag">
+                            <input type="checkbox" name="services" value="Custom Design">
+                            <span class="checkbox-content">Custom Design</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 04 — Project Timeline -->
+                <div class="form-section" data-reveal>
+                    <div class="form-section__header">
+                        <span class="form-section__number">04</span>
+                        <h2 class="form-section__title">Project Timeline</h2>
+                        <div class="form-section__line"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="select-wrapper">
+                            <select id="timeline" name="timeline">
+                                <option value="" disabled selected>Select your timeline</option>
+                                <option value="Immediately">Immediately</option>
+                                <option value="Within 1 Month">Within 1 Month</option>
+                                <option value="Within 3 Months">Within 3 Months</option>
+                                <option value="Just Exploring">Just Exploring</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 05 — Project Description -->
+                <!-- <div class="form-section" data-reveal>
+                    <div class="form-section__header">
+                        <span class="form-section__number">05</span>
+                        <h2 class="form-section__title">Tell Us About Your Project</h2>
+                        <div class="form-section__line"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="textarea-field">
+                            <textarea id="projectDescription" name="projectDescription" rows="5" placeholder="Describe your dream home, preferred style, inspirations, number of rooms, or any special requirements."></textarea>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- Submit -->
+                <div class="form-section form-section--submit" data-reveal>
+                    <button type="submit" class="consult-submit-btn" id="submitBtn">
+                        <span class="btn-text">Submit & Continue to WhatsApp</span>
+                        <span class="btn-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        </span>
+                        <span class="spinner"></span>
+                    </button>
+                    <p class="submit-note">Your details will be sent via WhatsApp to start your consultation.</p>
+                </div>
+
+            </form>
+        </section>
+
+    </main>
+
+    <!-- ===================== FOOTER (same as index.html) ===================== -->
+    <footer class="site-footer" id="contact" aria-labelledby="footer-heading">
+        <h2 class="visually-hidden" id="footer-heading">Footer</h2>
+        <div class="footer__top">
+            <div class="footer__brand">
+                <img src="" alt="Sky Interiors company logo" class="footer__logo">
+                <p class="footer__tagline">Designing interiors that reflect your story.</p>
+            </div>
+            <nav class="footer__links" aria-label="Quick links">
+                <h3 class="footer__heading">Quick Links</h3>
+                <ul>
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <address class="footer__contact">
+                <h3 class="footer__heading">Contact Us</h3>
+                <p><a href="tel:+919703736555">+91 97037 36555</a></p>
+                <p><a href="mailto:skyinteriors@rediffmail.com">skyinteriors@rediffmail.com</a></p>
+                <p>, Hyderabad, Telangana, India</p>
+            </address>
+            <div class="footer__social">
+                <h3 class="footer__heading">Follow Us</h3>
+                <ul class="social-icons">
+                    <li><a href="#" aria-label="Sky Interiors on Instagram" class="social-icons__link">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button type="button" class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>
+
+    <!-- Site JS (handles navbar, back-to-top, etc.) -->
+    <script src="script.js" defer></script>
+
+    <!-- Consultation page JS -->
+    <script src="consultation.js" defer></script>
+</body>
+</html>

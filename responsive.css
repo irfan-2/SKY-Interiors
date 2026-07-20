@@ -1,0 +1,593 @@
+/* ==========================================================================
+   Sky INTERIORS — RESPONSIVE STYLESHEET
+   Breakpoints: 1440px / 1200px / 992px / 768px / 576px / 375px
+   Approach: desktop-first overrides cascading down from style.css
+   ========================================================================== */
+
+/* ==========================================================================
+   GLOBAL SAFETY NET — prevents horizontal scroll at any size
+   ========================================================================== */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ==========================================================================
+   BREAKPOINT 1: 1440px AND BELOW
+   Large desktops — tighten container padding slightly, keep 4-col grids
+   ========================================================================== */      
+@media screen and (max-width: 1440px) {
+
+  :root {
+    --space-2xl: 7rem;
+  }
+
+  .navbar,
+  .services__grid,
+  .portfolio__grid,
+  .why-us__grid,
+  .testimonials__grid,
+  .footer__top {
+    max-width: 1140px;
+  }
+
+  .hero {
+    gap: var(--space-lg);
+  }
+}
+
+/* ==========================================================================
+   BREAKPOINT 2: 1200px AND BELOW
+   Small desktops / large laptops — services move to 3 columns,
+   footer columns narrow slightly
+   ========================================================================== */
+@media screen and (max-width: 1200px) {
+
+  section {
+    padding: var(--space-xl) 5vw;
+  }
+
+  /* Services: 4 columns -> 3 columns */
+  .services__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Footer: tighten column ratio */
+  .footer__top {
+    grid-template-columns: 1.2fr 1fr 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .hero__heading {
+    font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  }
+}
+
+/* ==========================================================================
+   BREAKPOINT 3: 992px AND BELOW
+   Tablets landscape — navigation becomes hamburger, hero and about
+   collapse to single column, portfolio/testimonials move to 2 columns
+   ========================================================================== */
+@media screen and (max-width: 992px) {
+
+  :root {
+    --space-2xl: 5.5rem;
+    --space-xl: 3.5rem;
+    --header-height: 72px;
+  }
+
+  /* ---------- Navigation: switch to hamburger menu ---------- */
+  .navbar__toggle {
+    display: flex;
+    z-index: 600;
+  }
+
+  .navbar__menu {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    background-color: var(--color-card);
+    box-shadow: var(--shadow-medium);
+    padding: var(--space-sm) 6vw;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height var(--transition-base), opacity var(--transition-base), visibility var(--transition-base);
+  }
+
+  .navbar__menu.is-open {
+    max-height: 400px;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .navbar__item {
+    width: 100%;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .navbar__link {
+    display: block;
+    padding: var(--space-sm) 0;
+  }
+
+  .navbar__cta {
+    display: none;
+  }
+
+  /* Hamburger animates into an "X" when menu is open */
+  .navbar__toggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .navbar__toggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .navbar__toggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* ---------- Hero: single column ---------- */
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-top: var(--space-xl);
+    text-align: center;
+  }
+
+  .hero__content {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .hero__description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero__actions {
+    justify-content: center;
+  }
+
+  .hero__media {
+    order: -1;
+  }
+
+  /* ---------- Services: 3 columns -> 2 columns ---------- */
+  .services__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ---------- Portfolio: 3 columns -> 2 columns ---------- */
+  .portfolio__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ---------- About: single column ---------- */
+  .about {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .about__media {
+    order: -1;
+    max-height: 420px;
+  }
+
+  .about__stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* ---------- Why Choose Us: 3 columns -> 2 columns ---------- */
+  .why-us__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ---------- Testimonials: 3 columns -> 2 columns ---------- */
+  .testimonials__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ---------- Footer: 4 columns -> 2 columns ---------- */
+  .footer__top {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg) var(--space-md);
+  }
+
+  .footer__brand {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ==========================================================================
+   BREAKPOINT 4: 768px AND BELOW
+   Tablets portrait / large phones — most grids collapse to single column,
+   timeline padding tightens, CTA and stats adapt
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+
+  :root {
+    --space-2xl: 4.5rem;
+    --space-xl: 3rem;
+    --space-lg: 2.25rem;
+  }
+
+  section {
+    padding: var(--space-xl) 6vw;
+  }
+
+  /* ---------- Section headers ---------- */
+  .section-header {
+    max-width: 100%;
+  }
+
+  /* ---------- Buttons: resize for touch targets ---------- */
+  .btn {
+    font-size: 0.9rem;
+    padding: 0.8rem 1.7rem;
+    width: 100%;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+  }
+
+  .btn--large {
+    padding: 1rem 2rem;
+  }
+
+  .cta .btn--large {
+    width: auto;
+    padding: 1rem 2.4rem;
+  }
+
+  /* ---------- Services: 2 columns -> 1 column ---------- */
+  .services__grid {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+    margin-inline: auto;
+  }
+
+  /* ---------- Portfolio: 2 columns -> 1 column ---------- */
+  .portfolio__grid {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+    margin-inline: auto;
+  }
+
+  /* ---------- Why Choose Us: 2 columns -> 1 column ---------- */
+  .why-us__grid {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+    margin-inline: auto;
+  }
+
+  /* ---------- Testimonials: 2 columns -> 1 column ---------- */
+  .testimonials__grid {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+    margin-inline: auto;
+  }
+
+  /* ---------- Statistics: 4 columns -> 2 columns ---------- */
+  .about__stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .stat-item__number {
+    font-size: 1.9rem;
+  }
+
+  /* ---------- Timeline: tighten indent, keep vertical rule ---------- */
+  .process__timeline {
+    padding-left: var(--space-lg);
+  }
+
+  .process__step-number {
+    left: calc(-1 * var(--space-lg) - 15px);
+    width: 36px;
+    height: 36px;
+    font-size: 0.85rem;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    margin: 0 5vw var(--space-xl);
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  /* ---------- Footer: 2 columns -> 1 column, fully stacked ---------- */
+  .footer__top {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    text-align: center;
+  }
+
+  .footer__brand {
+    grid-column: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer__links ul,
+  .social-icons {
+    align-items: center;
+  }
+
+  .footer__contact {
+    text-align: center;
+  }
+
+  /* ---------- Floating buttons: shrink slightly for smaller viewport ---------- */
+  .whatsapp-float,
+  .back-to-top {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+  }
+
+  .whatsapp-float {
+    left: 20px;
+  }
+
+  .back-to-top {
+    right: 20px;
+  }
+}
+
+/* ==========================================================================
+   BREAKPOINT 5: 576px AND BELOW
+   Mobile phones — refine spacing, project card meta wraps, single-column
+   confirmed across all grids, type scale steps down
+   ========================================================================== */
+@media screen and (max-width: 576px) {
+
+  :root {
+    --space-xl: 2.5rem;
+    --space-lg: 2rem;
+    --space-md: 1.25rem;
+  }
+
+  .navbar {
+    padding: 0 5vw;
+  }
+
+  .navbar__company-name {
+    font-size: 1.1rem;
+  }
+
+  .navbar__logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero__heading {
+    font-size: clamp(2rem, 8vw, 2.6rem);
+  }
+
+  .hero__description {
+    font-size: 1rem;
+  }
+
+  /* ---------- Project card meta: stack area/completion ---------- */
+  .project-card__meta {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  /* ---------- About stats: full single column on small phones ---------- */
+  .about__stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .about__block {
+    padding-left: var(--space-xs);
+  }
+
+  /* ---------- Timeline: reduce left offset further ---------- */
+  .process__timeline {
+    padding-left: 2.25rem;
+  }
+
+  .process__step-number {
+    left: -2.25rem;
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+
+  .process__step {
+    padding-bottom: var(--space-lg);
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq-item__question {
+    font-size: 0.95rem;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta__heading {
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+  }
+
+  .cta .btn--large {
+    width: 100%;
+  }
+
+  /* ---------- Footer ---------- */
+  .footer__heading {
+    font-size: 0.85rem;
+  }
+}
+
+/* ==========================================================================
+   BREAKPOINT 6: 375px AND BELOW
+   Small mobile phones — final tightening pass for smallest screens
+   ========================================================================== */
+@media screen and (max-width: 375px) {
+
+  :root {
+    --space-2xl: 3.5rem;
+    --space-xl: 2rem;
+    --space-lg: 1.75rem;
+    --space-md: 1rem;
+  }
+
+  section {
+    padding: var(--space-xl) 5vw;
+  }
+
+  .navbar__company-name {
+    font-size: 1rem;
+  }
+
+  .hero__heading {
+    font-size: clamp(1.8rem, 9vw, 2.2rem);
+  }
+
+  .hero__description {
+    font-size: 0.95rem;
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    padding: 0.75rem 1.4rem;
+  }
+
+  .section-header__title {
+    font-size: clamp(1.6rem, 7vw, 2rem);
+  }
+
+  .section-header__subtitle {
+    font-size: 0.9rem;
+  }
+
+  /* ---------- Statistics: single column for very narrow screens ---------- */
+  .about__stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xs) var(--space-sm);
+  }
+
+  .stat-item__number {
+    font-size: 1.6rem;
+  }
+
+  .stat-item__label {
+    font-size: 0.78rem;
+  }
+
+  /* ---------- Cards: tighten inner padding ---------- */
+  .service-card__title,
+  .service-card__description {
+    margin-left: var(--space-sm);
+    margin-right: var(--space-sm);
+  }
+
+  .project-card__body,
+  .feature-card,
+  .testimonial-card {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .faq-item {
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  /* ---------- Timeline: minimal indent for smallest screens ---------- */
+  .process__timeline {
+    padding-left: 2rem;
+  }
+
+  .process__step-number {
+    left: -2rem;
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+    border-width: 2px;
+  }
+
+  .process__step-title {
+    font-size: 1.05rem;
+  }
+
+  .process__step-text {
+    font-size: 0.88rem;
+  }
+
+  /* ---------- Floating buttons: final size for small screens ---------- */
+  .whatsapp-float,
+  .back-to-top {
+    width: 46px;
+    height: 46px;
+    bottom: 16px;
+  }
+
+  .whatsapp-float {
+    left: 16px;
+  }
+
+  .whatsapp-float__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .back-to-top {
+    right: 16px;
+    font-size: 1.1rem;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    margin: 0 4vw var(--space-xl);
+    padding: var(--space-lg) var(--space-sm);
+    border-radius: var(--radius-md);
+  }
+}
+
+/* ==========================================================================
+   PRINT STYLES — hide UI chrome not relevant to printed output
+   ========================================================================== */
+@media print {
+
+  .site-header,
+  .whatsapp-float,
+  .back-to-top,
+  .navbar__toggle {
+    display: none !important;
+  }
+
+  section {
+    padding: 1.5rem 0;
+  }
+
+  .hero,
+  .about,
+  .services__grid,
+  .portfolio__grid,
+  .why-us__grid,
+  .testimonials__grid {
+    display: block;
+  }
+}
