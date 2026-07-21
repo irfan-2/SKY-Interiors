@@ -283,7 +283,7 @@
             services: services,
             timeline: document.getElementById("timeline").value || "",
             description:
-                document.getElementById("projectDescription").value.trim(),
+                document.getElementById("projectDescription")?.value.trim() || "",
         };
     };
 
