@@ -291,6 +291,13 @@
      Applies a gentle fade + rise-in effect to key content blocks as they
      enter the viewport. Styles are set directly via JS so the effect works
      without depending on a matching CSS class.
+
+     NOTE: ".cta .btn" was intentionally REMOVED from this list. Animating
+     opacity/transform on the CTA button via an IntersectionObserver was
+     causing the button to be untappable on some mobile browsers if the
+     observer fired late (or not at all before the user tried to tap it).
+     The button now renders immediately visible and interactive; the
+     heading/text above it still animate in normally.
      ==================================================================== */
   const initFadeUpAnimation = () => {
     const selectors = [
@@ -307,7 +314,6 @@
       ".hero__media",
       ".cta__heading",
       ".cta__text",
-      ".cta .btn",
     ];
 
     const targets = qsa(selectors.join(","));

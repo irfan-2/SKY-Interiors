@@ -1327,6 +1327,14 @@ section {
   margin: 0 auto var(--space-lg);
 }
 
+/* FIX: ensures the CTA button always sits above the fixed floating
+   WhatsApp / back-to-top buttons on mobile, so taps land on the link
+   instead of being intercepted by an overlapping fixed element. */
+.cta .btn {
+  position: relative;
+  z-index: 50;
+}
+
 /* ==========================================================================
    16. FOOTER — matches the real 4-column grid: brand / links / contact / social
    ========================================================================== */
@@ -1456,7 +1464,7 @@ section {
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-medium);
-  z-index: 400;
+  z-index: 40;
   transition: transform var(--transition-base), box-shadow var(--transition-base);
   animation: softFloat 4s ease-in-out infinite;
 }
@@ -1489,7 +1497,7 @@ section {
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-medium);
-  z-index: 400;
+  z-index: 40;
   opacity: 0;
   visibility: hidden;
   transform: translateY(15px);
